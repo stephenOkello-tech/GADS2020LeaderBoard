@@ -7,11 +7,8 @@ import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.os.StrictMode
-import com.comptechnoid.gads2020leaderboard.BuildConfig
 
 import com.comptechnoid.gads2020leaderboard.R
-import com.comptechnoid.gads2020leaderboard.service.LearningLeader
 import com.comptechnoid.gads2020leaderboard.service.MainService
 import com.comptechnoid.gads2020leaderboard.service.ServiceBuilder
 import com.comptechnoid.gads2020leaderboard.service.Welcome
@@ -30,7 +27,7 @@ class InitialActivity : AppCompatActivity() {
         setContentView(R.layout.activity_initial)
 
 
-        enableStrictMode()
+        //enableStrictMode()
         brieflyShowWelcomeScreen()
     }
 
@@ -60,13 +57,7 @@ class InitialActivity : AppCompatActivity() {
         })
     }
 
-    private fun enableStrictMode() {
-        if (BuildConfig.DEBUG) {
-            val policy =
-                StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog()
-            StrictMode.setThreadPolicy(policy.build())
-        }
-    }
+
 
     //Check if the user is connected to internet
 

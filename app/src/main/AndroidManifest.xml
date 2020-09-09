@@ -3,7 +3,7 @@
     package="com.comptechnoid.gads2020leaderboard">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Del"></activity>
+        <activity android:name=".ui.home.Main2Activity"></activity>
+        <activity android:name=".ui.home.PagerTestActivity" />
+        <activity android:name=".Del" />
         <activity android:name=".ui.home.HomeActivity" />
         <activity android:name=".ui.submission.SubmitActivity" />
         <activity android:name=".MainActivity" />

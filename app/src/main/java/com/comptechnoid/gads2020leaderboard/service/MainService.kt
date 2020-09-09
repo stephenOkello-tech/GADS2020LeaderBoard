@@ -11,4 +11,7 @@ interface MainService {
     @GET("/api/hours")
     fun getLearningLeaders() : Call<List<LearningLeader>>
 
+    @GET("/api/skilliq")
+    fun getSkilliqLeaders() : Call<List<SkillIQLeader>>
+
 }

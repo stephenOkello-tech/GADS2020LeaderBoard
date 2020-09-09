@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeActivity">
@@ -15,10 +16,20 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_wrap"
         >
-        <TextView
+
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:minHeight="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:id="@+id/pagerTabs"
+            />
+        <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/hold"
+            android:id="@+id/vPager"
+            android:layout_below="@+id/pagerTabs"
             />
     </RelativeLayout>
 
