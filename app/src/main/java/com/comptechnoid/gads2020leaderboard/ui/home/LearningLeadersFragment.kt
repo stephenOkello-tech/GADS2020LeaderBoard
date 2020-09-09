@@ -25,7 +25,7 @@ import retrofit2.Response
  */
 class LearningLeadersFragment : Fragment() {
 
-    private lateinit var learning_leaders_recyclerview : RecyclerView
+    private lateinit var learningLeadersRecyclerview : RecyclerView
 
     private val mainService = ServiceBuilder.buildService(MainService::class.java)
     private  lateinit var adapter : LearningLeadersAdapter
@@ -45,9 +45,9 @@ class LearningLeadersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        learning_leaders_recyclerview = view.findViewById<RecyclerView>(R.id.learning_leaders_recyclerview)
-        learning_leaders_recyclerview.setHasFixedSize(true)
-        learning_leaders_recyclerview.layoutManager = LinearLayoutManager(view.context)
+        learningLeadersRecyclerview = view.findViewById(R.id.learning_leaders_recyclerview)
+        learningLeadersRecyclerview.setHasFixedSize(true)
+        learningLeadersRecyclerview.layoutManager = LinearLayoutManager(view.context)
 
         val requestCall : Call<List<LearningLeader>> = mainService.getLearningLeaders()
         requestCall.enqueue(object : Callback<List<LearningLeader>> {
@@ -59,8 +59,8 @@ class LearningLeadersFragment : Fragment() {
                 response: Response<List<LearningLeader>>
             ) {
                 //hold.text = response.body().toString()
-                adapter = LearningLeadersAdapter(targetFragment?.context, response.body())
-                learning_leaders_recyclerview.adapter = adapter
+                adapter = LearningLeadersAdapter(response.body()!!)
+                learningLeadersRecyclerview.adapter = adapter
 
             }
 
@@ -84,20 +84,6 @@ class LearningLeadersFragment : Fragment() {
         }
     }
 
-    private val learningLeaders: Unit  get() {
-        val requestCall : Call<List<LearningLeader>> = mainService.getLearningLeaders()
-        requestCall.enqueue(object : Callback<List<LearningLeader>> {
-            override fun onFailure(call: Call<List<LearningLeader>>, t: Throwable) {
-            }
 
-            override fun onResponse(
-                call: Call<List<LearningLeader>>,
-                response: Response<List<LearningLeader>>
-            ) {
-                //hold.text = response.body().toString()
-                adapter = LearningLeadersAdapter(targetFragment?.context, response.body())
-            }
 
-        })
-    }
 }

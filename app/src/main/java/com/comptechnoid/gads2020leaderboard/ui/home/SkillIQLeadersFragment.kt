@@ -5,8 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.comptechnoid.gads2020leaderboard.R
+import com.comptechnoid.gads2020leaderboard.adapters.SkillIQAdapter
+import com.comptechnoid.gads2020leaderboard.service.MainService
+import com.comptechnoid.gads2020leaderboard.service.ServiceBuilder
+import com.comptechnoid.gads2020leaderboard.service.SkillIQLeader
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 /**
@@ -15,9 +24,11 @@ import com.comptechnoid.gads2020leaderboard.R
  * create an instance of this fragment.
  */
 class SkillIQLeadersFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var skilliqrecyclerview : RecyclerView
+    private val mainService = ServiceBuilder.buildService(MainService::class.java)
+
+    private lateinit var adapter : SkillIQAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,13 +43,34 @@ class SkillIQLeadersFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_skill_i_q_leaders, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        skilliqrecyclerview = view.findViewById(R.id.skilliqRV)
+        skilliqrecyclerview.setHasFixedSize(true)
+        skilliqrecyclerview.layoutManager = LinearLayoutManager(view.context)
+
+        val requestCall = mainService.getSkilliqLeaders()
+        requestCall.enqueue(object : Callback<List<SkillIQLeader>>{
+            override fun onFailure(call: Call<List<SkillIQLeader>>, t: Throwable) {
+            }
+
+            override fun onResponse(
+                call: Call<List<SkillIQLeader>>,
+                response: Response<List<SkillIQLeader>>
+            ) {
+                if(response.body() != null){
+                    adapter = SkillIQAdapter(response.body()!!)
+                    skilliqrecyclerview.adapter = adapter
+                }
+            }
+
+        })
+
+    }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         * @return A new instance of fragment SkillIQLeadersFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
         fun newInstance() : Fragment{
             return SkillIQLeadersFragment()

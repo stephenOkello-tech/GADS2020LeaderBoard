@@ -1,7 +1,9 @@
 package com.comptechnoid.gads2020leaderboard.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -9,18 +11,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.comptechnoid.gads2020leaderboard.R
-import com.comptechnoid.gads2020leaderboard.service.LearningLeader
-import com.comptechnoid.gads2020leaderboard.service.MainService
-import com.comptechnoid.gads2020leaderboard.service.ServiceBuilder
-import com.comptechnoid.gads2020leaderboard.utils.toast
+
+import com.comptechnoid.gads2020leaderboard.ui.submission.SubmitActivity
 import com.google.android.material.tabs.TabLayout
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class HomeActivity : AppCompatActivity() {
 
-    private val mainService = ServiceBuilder.buildService(MainService::class.java)
     private lateinit var vPager : ViewPager
     private lateinit var pagerTabs : TabLayout
 
@@ -28,45 +24,64 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar_main)
+
+
         setSupportActionBar(toolbar)
+        supportActionBar?.setTitle(R.string.app_name)
 
-
-        vPager = findViewById(R.id.vPager)
         pagerTabs = findViewById(R.id.pagerTabs)
+        vPager = findViewById(R.id.vPager)
+
+        pagerTabs!!.addTab(pagerTabs!!.newTab().setText(getString(R.string.learning_learders)))
+        pagerTabs!!.addTab(pagerTabs!!.newTab().setText(getString(R.string.skill_iq_leaders)))
 
         val pagerAdapter  = PagerAdapter(supportFragmentManager,1)
         vPager.adapter = pagerAdapter
 
        vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(pagerTabs))
 
-
-
-
-
-        //learningLeaders
-    }
-
-    private val learningLeaders: Unit  get() {
-        val requestCall : Call<List<LearningLeader>> = mainService.getLearningLeaders()
-        requestCall.enqueue(object : Callback<List<LearningLeader>>{
-            override fun onFailure(call: Call<List<LearningLeader>>, t: Throwable) {
-                toast(t.message.toString())
+        pagerTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(tab: TabLayout.Tab?) {
             }
 
-            override fun onResponse(
-                call: Call<List<LearningLeader>>,
-                response: Response<List<LearningLeader>>
-            ) {
-                toast(response.body().toString())
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (tab != null) {
+                    vPager.currentItem = tab.position
+                }
             }
 
         })
+
+
+
+
+
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.submit_project_btn -> {
+                openSubmitProjectActivity()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun openSubmitProjectActivity(){
+        val intent = Intent(this, SubmitActivity::class.java)
+        startActivity(intent)
     }
 
     class PagerAdapter(fm : FragmentManager, behavior : Int) : FragmentPagerAdapter(fm,behavior) {
@@ -77,6 +92,7 @@ class HomeActivity : AppCompatActivity() {
                 else -> return SkillIQLeadersFragment.newInstance()
             }
         }
+
 
         override fun getCount(): Int {
             return 2

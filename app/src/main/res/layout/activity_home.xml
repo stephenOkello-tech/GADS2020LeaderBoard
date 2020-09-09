@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,16 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeActivity">
 
-    <include
-        layout="@layout/toolbar"
-        android:id="@+id/toolbar_wrap"
-        />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar_wrap"
-        >
 
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:elevation="5dp"
+            app:layout_scrollFlags="scroll|enterAlways"
+            android:id="@+id/toolbar_main"
+            android:background="@color/colorPrimary"
+            app:titleTextColor="@color/colorWhite"
+            android:fitsSystemWindows="true"
+            app:popupTheme="@style/ToolbarTheme"
+            />
         <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,13 +32,15 @@
             android:minHeight="?attr/actionBarSize"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:id="@+id/pagerTabs"
+            android:background="@color/colorPrimary"
             />
-        <androidx.viewpager.widget.ViewPager
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/vPager"
-            android:layout_below="@+id/pagerTabs"
-            />
-    </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-</RelativeLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/vPager"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
