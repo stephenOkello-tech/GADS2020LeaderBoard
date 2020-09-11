@@ -45,7 +45,9 @@ class SubmitActivity : AppCompatActivity() {
         submit_btn.setOnClickListener{
             val requestCall = submitService.submitProject(
                 firstname.text.toString(),
-                lastname.text.toString()
+                lastname.text.toString(),
+                email.text.toString(),
+                git_url.text.toString()
             )
 
             requestCall.enqueue(object : Callback<Void>{
