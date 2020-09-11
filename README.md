@@ -1,5 +1,6 @@
 # GADS2020LeaderBoard
 
+## Okello Stephen
 
 
-![alt text](https://github.com/stephenOkello-tech/GADS2020LeaderBoard/issues/1#issue-698433657)
+## Screen Shots for the project can be found in the Issues
